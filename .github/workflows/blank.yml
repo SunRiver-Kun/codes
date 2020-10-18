@@ -1,9 +1,10 @@
-name: black-knightr
+/*name: black-knightr
    										                        
 on:2019.12.21       
 
-jobs:把N个物体分成k份，不能重复（1.2.3与2.1.3等价）
-  build:
+jobs:"把N个物体分成k份，不能重复（1.2.3与2.1.3等价）"
+build:
+*/
   #include<stdio.h>
 int C(int a,int b)
 {   int s=0,i;
