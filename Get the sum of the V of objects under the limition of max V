@@ -1,6 +1,5 @@
 /*!
-求
-
+Get the sum of the V of objects under the limition of max V(求不超过最大体积的体积和) 
 */
 #include<iostream>
 #include<cstdlib>
