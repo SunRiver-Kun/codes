@@ -1,5 +1,7 @@
 /*!
 The max route of taking stations(最佳乘车路线问题)
+
+当初写这个的时候甚至没学完《数据结构与算法》，当时想了几天最后还是给我写出来了
 */
 #include<iostream>
 #include<cmath>
