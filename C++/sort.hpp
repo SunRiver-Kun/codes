@@ -194,6 +194,7 @@ namespace sr
 
 #pragma region 其他排序
 	//归并排序 O(nlogn)
+	/*
 	template <typename _Ty>
 	int __ListMerge(std::vector<_Ty>& arr, int st1, int st2)
 	{
@@ -211,7 +212,8 @@ namespace sr
 	void merge_sort(std::vector<_Ty>& arr)
 	{
 		__MergeSort(arr, 0, arr.size());
-	}
+	}*/
+	
 	//计数排序
 	template <typename _Ty>
 	void count_sort(std::vector<_Ty>& arr)
