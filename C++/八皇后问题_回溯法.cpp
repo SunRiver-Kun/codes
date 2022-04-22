@@ -1,54 +1,142 @@
 #include <iostream>
 #include <vector>
-#include <boost/progress.hpp>
 using namespace std;
 
-//°Ë»ÊºóÎÊÌâ£ºÔÚ8x8µÄ¸ñ×ÓÀï·Å8¸ö»Êºó£¬Ê¹Ã»ÓĞÁ½¸ö»ÊºóÔÚÍ¬Ò»ĞĞ¡¢ÁĞ¡¢Ğ±Ïß
-//»ØËİ·¨
+//åˆ¤æ–­ä¸ªæ•°
+class Solution
+{
+public:
+	/**
+	 *
+	 * @param n intæ•´å‹ the n
+	 * @return intæ•´å‹
+	 */
+	int col = 8, size_queens = 8;
+
+	int Nqueen(int n)
+	{
+		// write code here
+		col = size_queens = n; //ä»…ä»…æ–¹ä¾¿åˆ¤æ–­å‡å°‘
+		vector<vector<bool>> spot_taken(n, vector<bool>(n, false));
+		vector<pair<int, int>> queens;
+		return EightQueens(spot_taken, queens);
+	}
+
+	//å½“å‰çš„æ‘†æ”¾æ˜¯å¦åˆç†
+	bool IsLegal(const vector<pair<int, int>> &queens)
+	{
+		if (queens.size() <= 1)
+		{
+			return true;
+		}
+		for (int i = 0; i < queens.size(); ++i)
+		{
+			const auto &target = queens[i];
+			for (int j = i + 1; j < queens.size(); ++j)
+			{
+				if (target.first == queens[j].first || target.second == queens[j].second)
+				{
+					return false;
+				}
+				float k = float(queens[j].second - target.second) / float(
+																		queens[j].first - target.first);
+				if (abs(k - 1) < 1E-5 || abs(k + 1) < 1E-5)
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	//å¦‚æœè®°å½•æœ‰çš‡åçš„ä½ç½®ï¼ŒIsLegalå°±å¯ä»¥å»æ‰æœç´¢éå†ï¼ŒEightQueenså°±å¯ä»¥å‡å°‘é€’å½’æ¬¡æ•°
+	int EightQueens(vector<vector<bool>> &spot_taken,
+					vector<pair<int, int>> &queens,
+					int num_queens = 0)
+	{
+		if (!IsLegal(queens))
+		{
+			return 0;
+		}
+		if (num_queens == size_queens)
+		{
+			return 1;
+		}
+
+		int i = queens.empty() ? 0 : queens.back().first + 1;
+		int num = 0;
+		for (int j = 0; j < col; ++j)
+		{
+			spot_taken[i][j] = true;
+			queens.push_back(make_pair(i, j));
+			num += EightQueens(spot_taken, queens, num_queens + 1);
+			spot_taken[i][j] = false;
+			queens.pop_back();
+		}
+
+		return num;
+	}
+};
+
+
+//ä»…ä»…æ˜¯ä¸ºäº†æ‰“å°ç¬¬ä¸€ä¸ªå›¾
+//å…«çš‡åé—®é¢˜ï¼šåœ¨8x8çš„æ ¼å­é‡Œæ”¾8ä¸ªçš‡åï¼Œä½¿æ²¡æœ‰ä¸¤ä¸ªçš‡ååœ¨åŒä¸€è¡Œã€åˆ—ã€æ–œçº¿
+//å›æº¯æ³•
 constexpr const int row = 8, col = 8, size_queens = 8;
 
-//µ±Ç°µÄ°Ú·ÅÊÇ·ñºÏÀí
-bool IsLegal(const vector<pair<int, int>>& queens)
+//å½“å‰çš„æ‘†æ”¾æ˜¯å¦åˆç†
+bool IsLegal(const vector<pair<int, int>> &queens)
 {
-	if (queens.size() <= 1) { return true; }
+	if (queens.size() <= 1)
+	{
+		return true;
+	}
 	for (int i = 0; i < queens.size(); ++i)
 	{
-		auto target = queens[i];
+		const auto &target = queens[i];
 		for (int j = i + 1; j < queens.size(); ++j)
 		{
-			if (target.first == queens[j].first || target.second == queens[j].second) { return false; }
-			double k = double(queens[j].second - target.second) / double(queens[j].first - target.first);
-			if (k == 1.0 || k == -1.0) { return false; }
+			if (target.first == queens[j].first || target.second == queens[j].second)
+			{
+				return false;
+			}
+			float k = float(queens[j].second - target.second) / float(
+																	queens[j].first - target.first);
+			if (abs(k - 1) < 1E-5 || abs(k + 1) < 1E-5)
+			{
+				return false;
+			}
 		}
 	}
 	return true;
 }
 
-unsigned long long num = 0;
-
-//Èç¹û¼ÇÂ¼ÓĞ»ÊºóµÄÎ»ÖÃ£¬IsLegal¾Í¿ÉÒÔÈ¥µôËÑË÷±éÀú£¬EightQueens¾Í¿ÉÒÔ¼õÉÙµİ¹é´ÎÊı
-bool EightQueens(bool spot_taken[row][col], vector<pair<int, int>>& queens, int num_queens = 0)
+//å¦‚æœè®°å½•æœ‰çš‡åçš„ä½ç½®ï¼ŒIsLegalå°±å¯ä»¥å»æ‰æœç´¢éå†ï¼ŒEightQueenså°±å¯ä»¥å‡å°‘é€’å½’æ¬¡æ•°
+bool EightQueens(bool spot_taken[row][col], vector<pair<int, int>> &queens, int num_queens = 0)
 {
-	num++;
-
-	if (!IsLegal(queens)) { return false; }
-	if (num_queens == size_queens) { return true; }
+	if (!IsLegal(queens))
+	{
+		return false;
+	}
+	if (num_queens == size_queens)
+	{
+		return true;
+	}
 
 	pair<int, int> newpos = queens.empty() ? make_pair(0, 0) : queens.back();
 
-	for (int i = newpos.first; i < row; ++i)
+	int i = queens.empty() ? 0 : queens.back().first + 1;
+	for (int j = 0; j < col; ++j)
 	{
-		for (int j = 0; j < col; ++j)
+
+		spot_taken[i][j] = true;
+		queens.push_back(make_pair(i, j));
+		if (EightQueens(spot_taken, queens, num_queens + 1))
 		{
-			if (!spot_taken[i][j])	//Õâ¸öÎ»ÖÃÊÇ¿ÕµÄ
-			{
-				spot_taken[i][j] = true;
-				queens.push_back(make_pair(i, j));
-				if (EightQueens(spot_taken, queens, num_queens + 1)) { return true; }
-				spot_taken[i][j] = false;
-				queens.pop_back();
-			}
+			return true;
 		}
+		spot_taken[i][j] = false;
+		queens.pop_back();
 	}
 
 	return false;
@@ -58,10 +146,8 @@ int main()
 {
 	bool spot_taken[row][col]{};
 	vector<pair<int, int>> queens;
-	{
-		boost::progress_timer t;
-		EightQueens(spot_taken, queens);
-	}
+	EightQueens(spot_taken, queens);
+
 	for (int i = 0; i < row; ++i)
 	{
 		for (int j = 0; j < col; ++j)
@@ -71,6 +157,6 @@ int main()
 		cout << endl;
 	}
 
-	cout << endl << "total calculate:" << num << endl;
 	system("pause");
 }
+

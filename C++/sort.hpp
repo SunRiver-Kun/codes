@@ -194,26 +194,55 @@ namespace sr
 
 #pragma region 其他排序
 	//归并排序 O(nlogn)
-	/*
 	template <typename _Ty>
-	int __ListMerge(std::vector<_Ty>& arr, int st1, int st2)
+	void __Merge(std::vector<_Ty>& arr, std::vector<_Ty>& temp, int left, const int center, int right)
 	{
+		int index = left;
+		int left_first = left;
+		int right_first = center + 1;
+		while (left_first <= center && right_first <= right)
+		{
+			if (arr[left_first] < arr[right_first])
+			{
+				temp[index++] = arr[left_first++];
+			}
+			else
+			{
+				temp[index++] = arr[right_first++];
+			}
+		}
+		while (left_first <= center)
+		{
+			temp[index++] = arr[left_first++];
+		}
+		while (right_first <= right)
+		{
+			temp[index++] = arr[right_first++];
+		}
+		while (left <= right)
+		{
+			arr[left] = temp[left];
+			++left;
+		}
 	}
 
 	template <typename _Ty>
-	int __MergeSort(std::vector<_Ty>& arr, int left, int right)
+	void __MergeSort(std::vector<_Ty>& arr, std::vector<_Ty>& temp, int left, int right)
 	{
-		if (left >= right) { return left; }
-		int middle = (left + right) / 2;
-		return __ListMerge(arr, __MergeSort(arr, left, middle), __MergeSort(arr, middle + 1, right));
+		if (left >= right) { return; }
+		int center = (left + right) / 2;
+		__MergeSort(arr, temp, left, center);
+		__MergeSort(arr, temp, 1 + center, right);
+		__Merge(arr, temp, left, center, right);
 	}
 
 	template <typename _Ty>
 	void merge_sort(std::vector<_Ty>& arr)
 	{
-		__MergeSort(arr, 0, arr.size());
-	}*/
-	
+		if (arr.size() <= 1) { return; }
+		std::vector<_Ty> temp(arr.size());
+		__MergeSort(arr, temp, 0, arr.size() - 1);
+	}
 	//计数排序
 	template <typename _Ty>
 	void count_sort(std::vector<_Ty>& arr)
