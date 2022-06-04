@@ -53,7 +53,7 @@ namespace sr
 			}
 		}
 
-		//Ç°Ğò±éÀú
+		//Ç°ï¿½ï¿½ï¿½ï¿½ï¿½
 		void TraversePreorder()
 		{
 			if (empty()) { return; }
@@ -70,40 +70,57 @@ namespace sr
 			}
 		}
 
-		//ÖĞĞò±éÀú
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		void TraverseInorder()
 		{
 			if (empty()) { return; }
 			std::stack<node_point> nodes;
-			nodes.push(m_top);
+			// nodes.push(m_top);
+			node_point root = m_top;
 
-			bool leftcheck = m_top->leftchild != nullptr;
-			while (nodes.size())
+			while(nodes.size() || root)
 			{
-				node_point node = nodes.top();
-				if (leftcheck)
+				if(root)
 				{
-					while (node->leftchild)
-					{
-						nodes.push(node->leftchild);
-						node = node->leftchild;
-					}
-					leftcheck = false;
+					nodes.push(root);
+					root = root->leftchild;
 				}
-
-				node->visit();
-				nodes.pop();
-
-				if (node->rightchild)
+				else
 				{
-					node = node->rightchild;
-					nodes.push(node);
-					leftcheck = node->leftchild != nullptr;
+					root = nodes.top();
+					nodes.pop();
+					root->visit();
+					root = root->rightchild;
 				}
 			}
+
+			// bool leftcheck = m_top->leftchild != nullptr;
+			// while (nodes.size())
+			// {
+			// 	node_point node = nodes.top();
+			// 	if (leftcheck)
+			// 	{
+			// 		while (node->leftchild)
+			// 		{
+			// 			nodes.push(node->leftchild);
+			// 			node = node->leftchild;
+			// 		}
+			// 		leftcheck = false;
+			// 	}
+
+			// 	node->visit();
+			// 	nodes.pop();
+
+			// 	if (node->rightchild)
+			// 	{
+			// 		node = node->rightchild;
+			// 		nodes.push(node);
+			// 		leftcheck = node->leftchild != nullptr;
+			// 	}
+			// }
 		}
 
-		//ºóĞò±éÀú
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		void TraversePostorder()
 		{
 			if (empty()) { return; }
@@ -140,8 +157,8 @@ namespace sr
 			}
 		}
 
-		//¹ã¶ÈÓÅÏÈ±éÀú
-		//±éÀúÍêÒ»²ãÔÙµ½ÏÂÒ»²ã
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È±ï¿½ï¿½ï¿½
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ùµï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 		void TraverseBFS()
 		{
 			if (empty()) { return; }
