@@ -158,9 +158,9 @@ namespace sr
 		}
 	}
 	template <typename _Ty>
-	int __RemoveHeapTopItem(std::vector<_Ty>& arr, int size)
+	_Ty __RemoveHeapTopItem(std::vector<_Ty>& arr, int size)
 	{
-		int result = arr[0];
+		auto result = arr[0];
 		arr[0] = arr[size - 1];
 
 		int index = 0;
@@ -186,7 +186,7 @@ namespace sr
 		__MakeHeap(arr);
 		for (int i = arr.size() - 1; i >= 0; --i)
 		{
-			int maxvalue = __RemoveHeapTopItem(arr, i + 1);
+			auto maxvalue = __RemoveHeapTopItem(arr, i + 1);
 			arr[i] = maxvalue;
 		}
 	}
