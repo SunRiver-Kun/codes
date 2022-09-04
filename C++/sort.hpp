@@ -267,5 +267,7 @@ namespace sr
 			++value;
 		}
 	}
+
+	//基数排序，按个十百等位把数放到0-9的桶里，反复直到都在0桶里
 #pragma endregion
 }
