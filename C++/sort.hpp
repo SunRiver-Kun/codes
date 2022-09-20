@@ -7,6 +7,9 @@
 #include <vector>
 #include <memory>
 
+
+//稳定：插冒归基
+//不稳定：快选堆希
 namespace sr
 {
 #pragma region 插入排序

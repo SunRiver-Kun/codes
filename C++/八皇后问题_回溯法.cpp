@@ -38,8 +38,7 @@ public:
 				{
 					return false;
 				}
-				float k = float(queens[j].second - target.second) / float(
-																		queens[j].first - target.first);
+				float k = float(queens[j].second - target.second) / float(queens[j].first - target.first);
 				if (abs(k - 1) < 1E-5 || abs(k + 1) < 1E-5)
 				{
 					return false;
