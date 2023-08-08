@@ -1,0 +1,9 @@
+f = x1^2 + x2^2 + x3^2 + 4x1x2 + 6x1x3 + 8x2x3  + x1 + 2x2 + 3x3
+1   2   3	      AX <= B
+2   1   4	      Aeq X  = Beq
+3   4   1	      xm<= x <= xM
+
+H = [1,2,3;2,1,4;3,4,1];
+f = [1,2,3]
+[x,min] = quadprog( H,f,A,B,Aeq,Beq, xm, xM, x0,opt,p1,p2,.... )
+min = min + C 
