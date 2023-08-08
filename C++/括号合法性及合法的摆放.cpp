@@ -6,7 +6,7 @@ public:
      * @param n int整型 
      * @return string字符串vector
      */
-    inline bool IsLegal(contst string& str){
+    inline bool IsLegal(const string& str){
         int level = 0;  //正数表示(的数量， )用来抵消（的数量，左边没(时就非法了。(()()) -> (()) -> 合法
         for(auto& v : str){
             if(v=='(') { ++level; }

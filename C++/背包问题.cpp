@@ -1,59 +1,39 @@
-/*!
-Get the sum of the V of objects under the limition of max V(求不超过最大体积的体积和) 
+/*  01背包
+描述
+你有一个背包，最多能容纳的体积是V。
+（1）求这个背包至多能装多大价值的物品？
+（2）若背包恰好装满，求至多能装多大价值的物品？
+
+https://www.nowcoder.com/practice/237ae40ea1e84d8980c1d5666d1c53bc?tpId=308&tqId=2032575&ru=/exam/oj&qru=/ta/algorithm-start/question-ranking&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D308
 */
-#include<iostream>
-#include<cstdlib>
-#include<fstream>
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
-double SumMax(const double x[],const int N,const int index,const double V)
-{
-    if(index>N)
-    {
-        cout<<"错误index N = "<<N;
-        exit(index);
-    }
-    else if(index==N-1)
-    {
-        if(x[index]>=V) return x[index];
-        else return 0;
-    }
-    else if (x[index]>V)    return SumMax(x,N,index+1,V);     //跳过
-    else
-    {
-        double max = 0 , sum = 0;
-        for(int i=index+1;i<N;i++)
-            {
-                sum = SumMax(x,N,i,V-x[index]);
-                if(max<sum) max = sum;
-            }
-        return max+x[index];
 
+int main(){
+    int n, V;
+    cin >> n >> V;
+    int* v = new int[n];
+    int* w = new int[n];
+    vector<int> dp(V+1, 0);
+    for(int i=0; i<n; ++i){
+        cin >> v[i] >> w[i];
     }
-}
-
-
-int main()
-{
-    int N=0;
-    double V = 0;
-    cout<<"请输入物体的个数:"<<endl;
-    cin>>N;
-    double x[N];
-    cout<<"请输入每个物体的体积:"<<endl;
-    for(int i=0;i<N;i++)    cin>>x[i];
-    cout<<"请输入盒子体积:"<<endl;
-    cin>>V;
-
-    double max = 0 , sum = 0 , i_max = 0;
-    for(int i=0;i<N;i++)
-    {
-        sum = SumMax(x,N,i,V);
-        if(max<sum)
-           {
-               max = sum;
-               i_max = i;
-           }
+    for(int i=0; i<n; ++i){
+        for(int j=V; j>=v[i]; --j){
+            dp[j] = max( dp[j] ,dp[j-v[i]] + w[i] );
+        }
     }
-    cout<<"符合条件的最大体积为："<<max<<endl;
-    cout<<"i_max = "<<i_max<<endl;
+    cout << dp[V] << endl;
+    
+    fill(begin(dp),end(dp),-9999999);
+    dp[0] = 0;
+    for(int i=0; i<n; ++i){
+        for(int j=V; j>=v[i]; --j){
+            dp[j] = max( dp[j] ,dp[j-v[i]] + w[i] );
+        }
+    }
+    cout << max(0, dp[V]) << endl;
 }
