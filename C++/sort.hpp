@@ -122,20 +122,24 @@ namespace sr
 	template <typename _Ty>
 	void __QuickSort(std::vector<_Ty>& arr, int left, int right)
 	{
+		if (left>=right) { return; }
+
 		int i = left, j = right;
-		auto pivot = arr[left];
+		auto base = arr[left];
 		while (i < j)
 		{
 			//从右向左找比基数小的元素
-			while (i < j && arr[j] >= pivot) { --j; }
-			if (i < j) { std::swap(arr[i], arr[j]); }
+			while (i < j && arr[j] >= base) { --j; }
+			arr[i] = arr[j];
 
 			//从左向右找比基数大的元素
-			while (i < j && arr[i] <= pivot) { ++i; }
-			if (i < j) { std::swap(arr[i], arr[j]); }
+			while (i < j && arr[i] <= base) { ++i; }
+			arr[j] = arr[i];
 		}
-		if (i != left) { __QuickSort(arr, left, i - 1); }
-		if (j != right) { __QuickSort(arr, j + 1, right); }
+		arr[i] = base;	//i==j
+
+		__QuickSort(arr, left, i - 1);
+		__QuickSort(arr, i + 1, right);
 	}
 	template <typename _Ty>
 	void quick_sort(std::vector<_Ty>& arr)
